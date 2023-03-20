@@ -1,0 +1,8 @@
+
+.Home {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-left: 21%;
+    flex-wrap: wrap;
+}

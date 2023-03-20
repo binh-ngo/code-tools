@@ -1,0 +1,29 @@
+#homeCard{
+    margin: 2rem;
+    width: 20rem;
+    height: 8rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: linear-gradient(359.56deg, salmon -15.28%, rgba(255, 255, 255, 0) 40.16%);
+}
+
+#homeTitle {
+    color: #4D2D20;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 177.5%;
+    margin-bottom: 4px;
+}
+
+.homeText{
+    color: #4D2D2091;
+    font-family: 'Ubuntu';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+padding: 5px;
+}
+
+#homeInfoDiv {
+    margin:5%;
+}
