@@ -3,27 +3,20 @@ html {
 }
 
 a {
-    list-style-type: none;
     text-decoration: none;
-}
-
-.sidebar a{
-    text-align: center;
+    list-style-type: none;
 }
 
 .sidebar {
     background-color: rgba(250, 128, 114, 1);
-    width: 20%;
     min-height: 100vh;
-    padding-top: 2%;
-}
-
-.sidebar h1, h2 {
-    text-align: center;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 
 .sidebar li:hover {
-    background-color: rgba(250, 128, 114, 0.2)
+    background-color: rgba(250, 128, 114, 0.2);
 }
 
 .sidebar ul {
@@ -32,10 +25,30 @@ a {
 
 .sidebar li {
     font-size: 1.5rem;
-    margin: 10% 0;
+    margin-top: 130px;
+    margin-left: -85%;
 }
 
 .sidebar a {
     text-decoration: none;
     color: black;
+}
+
+.footer {
+    width: 100vw;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: slategray;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 5%;
 }

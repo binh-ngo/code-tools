@@ -3,30 +3,32 @@ import { Row, Col, Container } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import './style.css'
 
-function Home() {
+function Home(props) {
+  const homeContent = [
+    {
+      title: "React",
+      description: "Click me if you want to learn some React tips!"
+    },
+    {
+      title: "Javascript",
+      description: "Click me if you want to learn some Javascript tips!"
+    },
+    {
+      title: "CDK",
+      description: "Click me if you want to learn some CDK tips!"
+    },
+  ]
   return (
     <Container>
       <Row className="Home flex">
-        <Col sm="4" className="homeCard flex">
-          <HomeCard
-            title="HTML"
-            description="Click me if you want to learn some HTML tips!"
-          />
-        </Col>
-        <Col sm="4" className="homeCard">
-          <HomeCard
-            title="CSS"
-            description="Click me if you want to learn some CSS tips!"
+        {homeContent.map((props) => (
+          <Col sm="3" className="homeCard flex">
+            <HomeCard
+              title={props.title}
+              description={props.description}
             />
         </Col>
-      </Row>
-      <Row className="Home flex">
-        <Col sm="4" className="homeCard">
-          <HomeCard
-            title="Javascript"
-            description="Click me if you want to learn some Javascript tips!"
-            />
-        </Col>
+        ))}
             </Row>
             </Container>
   );

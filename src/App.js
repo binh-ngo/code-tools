@@ -8,9 +8,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home/index";
-import HTML from "./pages/Html/index"
-import CSS from "./pages/Css/index"
 import Javascript from "./pages/Js/index"
+import Footer from "./components/Footer";
+import ReactPage from "./pages/ReactPage";
+import CDK from "./pages/CDK/index"
 
 
 function App() {
@@ -20,11 +21,12 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/html" element={<HTML />} />
-          <Route path="/css" element={<CSS />} />
+          <Route path="/react" element={<ReactPage />} /> 
           <Route path="/javascript" element={<Javascript />} />
+          <Route path="/cdk" element={<CDK />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
