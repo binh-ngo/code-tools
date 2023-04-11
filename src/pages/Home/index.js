@@ -3,7 +3,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import './style.css'
 
-function Home(props) {
+function Home() {
   const homeContent = [
     {
       title: "React",

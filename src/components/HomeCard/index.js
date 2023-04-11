@@ -6,6 +6,9 @@ export default function HomeCard(props) {
   return (
     <a href={`/${props.title.toLowerCase()}`}>
     <Card id="homeCard" className="card col-4" key={props.id}>
+    {/* <div id="imgContainer">
+        <Card.Img id="cardImg" src={props.src} alt={props.alt}></Card.Img>
+      </div> */}
       <div id="homeInfoDiv">
         <Card.Title id="homeTitle">{props.title}</Card.Title>
         <Card.Body className="homeText">{props.description}</Card.Body>

@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home/index";
 import Javascript from "./pages/Js/index"
-import Footer from "./components/Footer";
 import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
 
@@ -26,7 +25,6 @@ function App() {
           <Route path="/cdk" element={<CDK />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-        <Footer />
       </div>
     </Router>
   );
