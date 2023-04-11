@@ -15,7 +15,7 @@ a {
 }
 
 .sidebar li:hover {
-    background-color: rgba(250, 128, 114, 0.2);
+    color: rgba(57, 159, 248, 0.784);
 }
 
 .sidebar ul {
@@ -24,8 +24,9 @@ a {
 
 .sidebar li {
     font-size: 1.5rem;
-    margin-top: 200px;
-    margin-left: -50%;
+    margin-top: 40px;
+    margin-left: -85%;
+    text-align: center;
 }
 
 .sidebar a {
