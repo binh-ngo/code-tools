@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
-import component from "../../assets/Screenshot 2023-04-11 at 10.13.34 AM.png"
 import "./style.css"
+import { CodeBlock, dracula } from "react-code-blocks";
 
 function ReactPage() {
   const reactContent = [
@@ -10,34 +10,74 @@ function ReactPage() {
       title: "Components",
       description:
         "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
-    },
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
     {
       title: "Components",
       description:
         "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
-    },
-    {
-      title: "Components",
-      description:
-        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",  
-    },
-    {
-      title: "Components",
-      description:
-        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",  
-    },
-    {
-      title: "Components",
-      description:
-        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",  
-    },
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
     {
       title: "Components",
       description:
         "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
-      src: component,
-      alt: "Description of components."   
-    },
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
+    {
+      title: "Components",
+      description:
+        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
+    {
+      title: "Components",
+      description:
+        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
+    {
+      title: "Components",
+      description:
+        "Components can be as small as a button, or take up the whole page. They must start with a capital letter to differentiate them from HTML tags, which must be lowercase.",
+      code: `class Hello extends React.Component {
+        render () {
+          return <div className='message-box'>
+            Hello {this.props.name}
+          </div>
+        }
+      },`
+      },
   ];
   return (
     <Container>
@@ -48,9 +88,12 @@ function ReactPage() {
             <HomeCard 
               title={props.title} 
               description={props.description} 
-              src={props.src}
-              alt={props.alt}
               />
+        <CodeBlock 
+        text={props.code}
+        language='javascript'
+        showLineNumbers={false}
+        theme={dracula}/>
           </Col>
         ))}
       </Row>
