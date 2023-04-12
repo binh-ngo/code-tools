@@ -23,6 +23,7 @@ function App() {
           <Route path="/react" element={<ReactPage />} /> 
           <Route path="/javascript" element={<Javascript />} />
           <Route path="/cdk" element={<CDK />} />
+          <Route path="/leetcode" element={<CDK />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

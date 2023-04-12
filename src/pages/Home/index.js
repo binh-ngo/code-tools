@@ -17,6 +17,10 @@ function Home() {
       title: "CDK",
       description: "Click me if you want to learn some CDK tips!"
     },
+    {
+      title: "LeetCode",
+      description: "Click me if you want to learn some LeetCode tips!"
+    },
   ]
   return (
     <Container>
