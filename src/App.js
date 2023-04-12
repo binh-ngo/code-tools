@@ -11,6 +11,7 @@ import Home from "./pages/Home/index";
 import Javascript from "./pages/Js/index"
 import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
+import LeetCode from "./components/LeetCode";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/react" element={<ReactPage />} /> 
           <Route path="/javascript" element={<Javascript />} />
           <Route path="/cdk" element={<CDK />} />
-          <Route path="/leetcode" element={<CDK />} />
+          <Route path="/leetcode" element={<LeetCode />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

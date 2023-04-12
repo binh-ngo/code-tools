@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import "./style.css"
-import { CopyBlock, dracula } from "react-code-blocks";
+import { atomOneDark, CopyBlock } from "react-code-blocks";
 
 function ReactPage() {
   const reactContent = [
@@ -98,7 +98,7 @@ class Hello extends Component {
         text={props.code}
         language='javascript'
         showLineNumbers={false}
-        theme={dracula}/>
+        theme={atomOneDark}/>
           </Col>
         ))}
       </Row>
