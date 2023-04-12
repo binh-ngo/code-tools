@@ -1,29 +1,31 @@
-.homeCard{
-    margin: 2rem;
-    width: 25rem;
-    height: auto;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Raleway&display=swap");
+.homeCard {
+  margin: 2rem;
+  width: 25rem;
+  height: auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #homeTitle {
-    color: #4D2D20;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 177.5%;
-    margin-bottom: 4px;
-    padding-top: .6rem;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 177.5%;
+  margin-bottom: 4px;
 }
 
-.homeText{
-    color: black;
-    font-family: 'Ubuntu';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-padding-bottom: 1.7rem;
+#homeTitle a {
+  color: black;
+  text-decoration: none !important;
+}
+.homeText {
+  color: black;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 35px;
 }
 
 #homeInfoDiv {
-    margin:5%;
+  margin: 5%;
 }
