@@ -10,7 +10,8 @@ function ReactPage() {
       title: "Installation",
       description:
         "Follow the code below to create a new react app. If you already created a repository that you want to turn into a react app, navigate to your root directory, and replace the name of the app from the code below with a period ( . ).",
-      code: `npx create-react-app <my-react-app>`
+      code: `
+      npx create-react-app <my-react-app>`
       },
     {
       title: "Components",
