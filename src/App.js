@@ -11,7 +11,7 @@ import Home from "./pages/Home/index";
 import Javascript from "./pages/Js/index"
 import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
-import LeetCode from "./components/LeetCode";
+import LeetCode from "./pages/LeetCode";
 
 
 function App() {
