@@ -1,10 +1,17 @@
-import React from "react";
+import { React } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import "./style.css"
 import { atomOneDark, CopyBlock } from "react-code-blocks";
 
 function LeetCode() {
+    // TODO: show code on click
+    // const [showCode, setShowCode] = useState(false);
+
+    // function toggleCode() {
+    //     setShowCode(!showCode);
+    // }
+
     const leetcodeContent = [
         {
             title: "1. Two Sum",
@@ -125,9 +132,11 @@ code:
     if(!s) return false;
 
     for(let i=0; i<s.length; i++) {
+     // pushes all opening brackets to the array
       if(s[i] == '{' || s[i] == '(' || s[i] == '[') {
         openingBrackets.push(s[i]);
-      } else if(bracketPair[openingBrackets.pop()] != s[i])
+    // when the program comes across a closing bracket, if it != to the last bracket in the openingBrackets array's value in the bracketPair object, return false. .pop() also removes the opening bracket from the array.
+      } else if (bracketPair[openingBrackets.pop()] != s[i])
       return false;{ 
       }
     }
@@ -141,11 +150,14 @@ code:
         <Row className="Home flex">
           {leetcodeContent.map((props) => (
             <Col sm="3" className="homeCard flex">
+                {/* <Button onClick={toggleCode}> */}
               <HomeCard 
                 title={props.title} 
                 description={props.description} 
                 />
+                {/* </Button> */}
           <CopyBlock 
+          className="cLyCWT"
           text={props.code}
           language='javascript'
           showLineNumbers={false}
