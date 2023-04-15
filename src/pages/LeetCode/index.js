@@ -106,6 +106,36 @@ var longestCommonPrefix = function(strs) {
     // time complexity O(n*m)
 };`,
         },
+        {
+title: "20. Valid Parentheses",
+description: `Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.`,
+code: 
+`var isValid = function(s) {
+    const bracketPair = {
+        "(": ")",
+        "{": "}",
+        "[": "]",
+    };
+
+    let openingBrackets = [];
+    if(!s) return false;
+
+    for(let i=0; i<s.length; i++) {
+      if(s[i] == '{' || s[i] == '(' || s[i] == '[') {
+        openingBrackets.push(s[i]);
+      } else if(bracketPair[openingBrackets.pop()] != s[i])
+      return false;{ 
+      }
+    }
+    return openingBrackets.length === 0;
+};`,
+        },
     ];
     return(
         <Container>
