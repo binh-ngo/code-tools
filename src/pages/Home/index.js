@@ -10,8 +10,8 @@ function Home() {
       description: "Click me if you want to learn some React tips!"
     },
     {
-      title: "Javascript",
-      description: "Click me if you want to learn some Javascript tips!"
+      title: "Algorithms",
+      description: "Click me if you want to learn some tips on algorithms!"
     },
     {
       title: "CDK",

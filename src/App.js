@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home/index";
-import Javascript from "./pages/Js/index"
+import Algorithms from "./pages/Algorithms/index"
 import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
 import LeetCode from "./pages/LeetCode";
@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/react" element={<ReactPage />} /> 
-          <Route path="/javascript" element={<Javascript />} />
+          <Route path="/algorithms" element={<Algorithms />} />
           <Route path="/cdk" element={<CDK />} />
           <Route path="/leetcode" element={<LeetCode />} />
           <Route path="*" element={<Navigate to="/" />} />
