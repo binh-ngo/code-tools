@@ -14,9 +14,7 @@ class Cheatsheet extends Stack {
       env: props.env as Environment,
     })
 
-    new DBStack(this, "DBStack", {
-
-    })
+    new DBStack(this, "DBStack", {env: props.env})
   }
 }
 new Cheatsheet(app, "CheatSheet", {
