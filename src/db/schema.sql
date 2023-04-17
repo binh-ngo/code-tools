@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS codetools_db;
+CREATE DATABASE codetools_db;
