@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import HomeCard from '../HomeCard';
+import HomeCard from '../../components/HomeCard';
 import "./style.css"
 import { atomOneDark, CodeBlock } from "react-code-blocks";
 
-export const Algorithms = () => {
+function Algorithms() {
     const algorithmContent = {};
   return (
     <Container>
@@ -27,3 +27,5 @@ export const Algorithms = () => {
   </Container>
   )
 }
+
+export default Algorithms;
