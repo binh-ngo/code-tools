@@ -2,9 +2,8 @@ import * as cdk from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as kms from 'aws-cdk-lib/aws-kms';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import { Construct } from 'constructs';
-const apigw = require('@aws-cdk/aws-apigatewayv2');
-const integrations = require('@aws-cdk/aws-apigatewayv2-integrations');
 
 export class DBStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,27 +17,28 @@ export class DBStack extends cdk.Stack {
       encryptionKey,
     });
 
-    const createUserFunction = new lambda.Function(this, 'CreateUserFunction', {
+    const createUser = new lambda.Function(this, 'CreateUserFunction', {
         runtime: lambda.Runtime.NODEJS_16_X,
-        handler: 'index.handler',
-        code: lambda.Code.fromAsset('path/to/your/lambda/code'),
+        handler: 'create-user.handler',
+        code: lambda.Code.fromAsset('lambda'),
         environment: {
           USER_TABLE_NAME: userTable.tableName,
         },
       });
-      userTable.grantReadWriteData(createUserFunction);
+      userTable.grantReadWriteData(createUser);
 
-    // create the HTTP API
-    const api = new apigw.HttpApi(this, 'my-http-api', {
-        defaultIntegration: new integrations.LambdaProxyIntegration({
-        handler: createUserFunction,
-        }),
+          // Create the API Gateway REST API
+    const api = new apigateway.RestApi(this, 'MyApiGateway', {
+        restApiName: "MyApi"
     });
     
-    // create a route that maps to the Lambda function
-    api.addRoutes({
-        path: '/users',
-        methods: [apigw.HttpMethod.POST],
-    });
+    // Create the API Gateway resource and method for the create user endpoint
+    const users = api.root.addResource('users');
+    users.addMethod('POST', new apigateway.LambdaIntegration(createUser));
+    users.addMethod('GET', new apigateway.LambdaIntegration(createUser));
+    
+    new cdk.CfnOutput(this, 'ApiGatewayUrl', {
+        value: api.url,
+    })
   }
 }
