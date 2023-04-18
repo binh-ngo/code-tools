@@ -18,13 +18,6 @@ export class DBStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       encryptionKey,
     });
-
-    userTable.addGlobalSecondaryIndex({
-      indexName: 'userIndex',
-      partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: 'createdAt', type: dynamodb.AttributeType.NUMBER },
-      projectionType: dynamodb.ProjectionType.ALL,
-    });
     
     userTable.addGlobalSecondaryIndex({
       indexName: 'postIndex',
