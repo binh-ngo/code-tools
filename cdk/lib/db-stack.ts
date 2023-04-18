@@ -12,9 +12,25 @@ export class DBStack extends cdk.Stack {
     const encryptionKey = new kms.Key(this, 'MyKey');
 
     const userTable = new dynamodb.Table(this, 'Users', {
-      partitionKey: { name: 'username', type: dynamodb.AttributeType.STRING },
+      partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "postId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
       encryptionKey,
+    });
+
+    userTable.addGlobalSecondaryIndex({
+      indexName: 'userIndex',
+      partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: 'createdAt', type: dynamodb.AttributeType.NUMBER },
+      projectionType: dynamodb.ProjectionType.ALL,
+    });
+    
+    userTable.addGlobalSecondaryIndex({
+      indexName: 'postIndex',
+      partitionKey: { name: 'postId', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: 'createdAt', type: dynamodb.AttributeType.NUMBER },
+      projectionType: dynamodb.ProjectionType.ALL,
     });
 
     const createUser = new lambda.Function(this, 'CreateUserFunction', {
