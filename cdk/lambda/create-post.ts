@@ -1,96 +1,49 @@
-import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
-import { v4 as uuidv4 } from 'uuid';
-const AWS = require('aws-sdk');
+import { PostInput, Post } from "./Post";
+var slugify = require("slugify");
+const AWS = require("aws-sdk");
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-// Create a new DynamoDB DocumentClient
-const documentClient = new AWS.DynamoDB.DocumentClient();
+const createPost = async (postInput: PostInput) => {
+  console.log(
+    `createPost invocation event: ${JSON.stringify(postInput, null, 2)}`
+  );
 
-interface UserPost {
-  postId: string;
-  userId: string;
-  title: string;
-  body: string;
-  createdAt: string;
-}
+  const titleSlug = slugify(postInput.title.split(" ").slice(0, 4).join(" "), {
+    lower: true,
+    strict: true,
+  });
+  const postId = Date.now().toString();
 
-export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context:any) => {
-    let response: APIGatewayProxyResult;
-  
-    switch (event.httpMethod) {
-      case 'GET':
-        response = await handleGetPosts(event);
-        break;
-      case 'POST':
-        response = await handleCreatePost(event);
-        break;
-      default:
-        response = {
-          statusCode: 405,
-          body: JSON.stringify({ message: 'Method not allowed' }),
-        };
-    }
-  
-    return response;
+  const post: Post = {
+    titleSlug,
+    postId,
+    title: postInput.title,
+    content: postInput.content,
+    author: postInput.author,
+    created: new Date().toISOString(),
+    updated: new Date().toISOString(),
+    viewCount: 0,
   };
-  
-  async function handleGetPosts(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-    try {
-      const allPosts = await getAllPosts();
-      return {
-        statusCode: 200,
-        body: JSON.stringify(allPosts),
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ message: 'Error retrieving posts' }),
-      };
-    }
+
+  const params = {
+    TableName: process.env.POSTS_TABLE,
+    Item: {
+      PK: `POST#${postInput.author}`,
+      SK: postId,
+      type: "post",
+      ...post,
+    },
+    ReturnConsumedCapacity: "TOTAL",
+  };
+
+  try {
+    await docClient.put(params).promise();
+    return post;
+  } catch (err) {
+    console.log(`DynamoDB Error: ${JSON.stringify(err, null, 2)}`);
+
+    return null;
   }
-  
-  async function handleCreatePost(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-    try {
-      const requestBody = event.body ? JSON.parse(event.body) : null;
-      if (!requestBody || !requestBody.title || !requestBody.body) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: 'Invalid request body' }),
-        };
-      }
-  
-      const newPost: UserPost = {
-        postId: uuidv4(),
-        userId: 'your-user-id', // Replace this with your actual user ID
-        title: requestBody.title,
-        body: requestBody.body,
-        createdAt: new Date().toISOString(),
-      };
-      await createPost(newPost);
-      return {
-        statusCode: 201,
-        body: JSON.stringify(newPost),
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ message: 'Error creating post' }),
-      };
-    }
-  }
-  
-  
-  async function getAllPosts(): Promise<UserPost[]> {
-    const result = await documentClient.scan({
-      TableName: 'user-posts',
-    }).promise();
-  
-    return result.Items as UserPost[];
-  }
-  
-  async function createPost(post: UserPost): Promise<void> {
-    await documentClient.put({
-      TableName: 'user-posts',
-      Item: post,
-    }).promise();
-  }
-  
+};
+
+export default createPost;

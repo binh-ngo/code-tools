@@ -4,6 +4,7 @@ import * as kms from 'aws-cdk-lib/aws-kms';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import { Construct } from 'constructs';
+import { CfnOutput } from 'aws-cdk-lib';
 
 export class DBStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -12,12 +13,16 @@ export class DBStack extends cdk.Stack {
     const encryptionKey = new kms.Key(this, 'MyKey');
 
     const userTable = new dynamodb.Table(this, 'Users', {
-      partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: "postId", type: dynamodb.AttributeType.STRING },
+      partitionKey: { name: 'PK', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "SK", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       encryptionKey,
     });
+
+    new CfnOutput(this, "UserTableName", {
+      value: userTable.tableName,
+    })
     
     userTable.addGlobalSecondaryIndex({
       indexName: 'postIndex',
@@ -26,15 +31,16 @@ export class DBStack extends cdk.Stack {
       projectionType: dynamodb.ProjectionType.ALL,
     });
 
-    const createUser = new lambda.Function(this, 'CreateUserFunction', {
+    const postLambda = new lambda.Function(this, 'postLambda', {
         runtime: lambda.Runtime.NODEJS_16_X,
-        handler: 'create-user.handler',
+        handler: 'main.handler',
         code: lambda.Code.fromAsset('lambda'),
         environment: {
           USER_TABLE_NAME: userTable.tableName,
         },
       });
-      userTable.grantReadWriteData(createUser);
+      userTable.grantReadWriteData(postLambda);
+
     const createPost = new lambda.Function(this, 'CreatePostFunction', {
         runtime: lambda.Runtime.NODEJS_16_X,
         handler: 'create-post.handler',
@@ -52,8 +58,8 @@ export class DBStack extends cdk.Stack {
     
     // Create the API Gateway resource and method for the create user endpoint
     const users = api.root.addResource('users');
-    users.addMethod('POST', new apigateway.LambdaIntegration(createUser));
-    users.addMethod('GET', new apigateway.LambdaIntegration(createUser));
+    users.addMethod('POST', new apigateway.LambdaIntegration(postLambda));
+    users.addMethod('GET', new apigateway.LambdaIntegration(postLambda));
 
     const posts = api.root.addResource('posts');
     posts.addMethod('POST', new apigateway.LambdaIntegration(createPost));
