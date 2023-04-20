@@ -33,23 +33,23 @@ export const handler = async (
 ): Promise<ApiGatewayResponse> => {
   switch (event.httpMethod) {
     case 'POST':
-      if (event.path === '/createUser') {
+      if (event.path === '/users') {
         // Call the createUser function if the request is to create a user
         return await createUser(event.body);
-      } else if (event.path === '/createPost') {
+      } else if (event.path === '/posts') {
         // Call the createPost function if the request is to create a post
         return await createPost(JSON.parse(event.body));
       }
       break;
     case 'GET':
-      if (event.path === '/getPosts') {
+      if (event.path === '/posts') {
         // Call the getPosts function if the request is to get posts
         const author = event.queryStringParameters.author;
         return await getPosts(author);
       }
       break;
     case 'PUT':
-      if (event.path.startsWith('/updatePost/')) {
+      if (event.path.startsWith('/posts/')) {
         // Call the updatePost function if the request is to update a post
         const parts = event.path.split('/');
         const author = parts[2];
@@ -58,7 +58,7 @@ export const handler = async (
       }
       break;
       case 'DELETE':
-        if (event.path.startsWith('/deletePost/')) {
+        if (event.path.startsWith('/posts/')) {
           // Call the deletePost function if the request is to delete a post
           const parts = event.path.split('/');
           const author = parts[2];
