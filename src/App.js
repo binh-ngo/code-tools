@@ -13,7 +13,10 @@ import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
 import LeetCode from "./pages/LeetCode";
 import Header from "./components/Header";
+import { awsconfig } from "./aws-exports";
+import { Amplify } from "aws-amplify";
 
+Amplify.configure(awsconfig);
 
 function App() {
   return (
