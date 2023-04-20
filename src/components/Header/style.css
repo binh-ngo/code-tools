@@ -1,0 +1,62 @@
+nav {
+    /* position: fixed; */
+}
+
+nav img {
+    margin-top: -2%;
+}
+
+.logoName {
+    justify-content: space-between;
+}
+.navbar-brand {
+    font-size: 50px !important;
+    color: black;
+    margin-left: 12%;
+}
+.nav-link{
+    text-transform: uppercase;
+    transition: all .3s ease-in-out !important;
+}
+.nav-link:hover {
+    scale: 1.05;
+
+}
+
+.header ul {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-end;
+    margin-left: 10%;
+}
+
+.header .headerTags {
+    margin-left: 80%;
+}
+
+.header li {
+    margin-left: 7%;
+    display: inline;
+}
+
+.headerTags {
+    margin-right: -40%;
+}
+
+.navbar-toggler {
+    margin-right: 3%;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+nav {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.loginForm {
+    
+}

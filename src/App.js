@@ -12,12 +12,14 @@ import Algorithms from "./pages/Algorithms/index"
 import ReactPage from "./pages/ReactPage";
 import CDK from "./pages/CDK/index"
 import LeetCode from "./pages/LeetCode";
+import Header from "./components/Header";
 
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <Header />
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
