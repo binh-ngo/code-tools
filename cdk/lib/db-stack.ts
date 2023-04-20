@@ -46,16 +46,6 @@ export class DBStack extends cdk.Stack {
       });
       userTable.grantReadWriteData(postLambda);
 
-    const createPost = new lambda.Function(this, 'CreatePostFunction', {
-        runtime: lambda.Runtime.NODEJS_16_X,
-        handler: 'create-post.handler',
-        code: lambda.Code.fromAsset('lambda'),
-        environment: {
-          USER_TABLE_NAME: userTable.tableName,
-        },
-      });
-      userTable.grantReadWriteData(createPost);
-
           // Create the API Gateway REST API
     const api = new apigateway.RestApi(this, 'MyApiGateway', {
         restApiName: "MyApi",
@@ -67,8 +57,8 @@ export class DBStack extends cdk.Stack {
     users.addMethod('GET', new apigateway.LambdaIntegration(postLambda));
 
     const posts = api.root.addResource('posts');
-    posts.addMethod('POST', new apigateway.LambdaIntegration(createPost));
-    posts.addMethod('GET', new apigateway.LambdaIntegration(createPost));
+    posts.addMethod('POST', new apigateway.LambdaIntegration(postLambda));
+    posts.addMethod('GET', new apigateway.LambdaIntegration(postLambda));
     
     new cdk.CfnOutput(this, 'ApiGatewayUrl', {
         value: api.url,

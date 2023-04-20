@@ -1,38 +1,86 @@
-import createPost from "./create-post";
-import deletePost from "./delete-post";
-import getPosts from "./get-posts";
-import { PostInput } from "./Post";
-import updatePost from "./update-post";
-import createUser from "./create-user.js"
+// Import the functions to handle each operation
+import createPost from './createPost';
+import deletePost from './deletePost';
+import getPosts from './getPosts';
+import updatePost from './updatePost';
+import createUser from './createUser';
 
-type AppSyncEvent = {
-  info: {
-    fieldName: string;
+// Define the shape of the Lambda event
+type ApiGatewayEvent = {
+  httpMethod: string;
+  path: string;
+  headers: {
+    [name: string]: string;
   };
-  arguments: {
-    author: string;
-    postId: string;
-    post: PostInput;
+  queryStringParameters: {
+    [name: string]: string;
   };
+  body: string;
 };
 
-exports.handler = async (event: AppSyncEvent) => {
-  switch (event.info.fieldName) {
-    case "createUser":
-      return await createUser(event.arguments)
-    case "getPosts":
-      return await getPosts(event.arguments.author);
-    case "createPost":
-      return await createPost(event.arguments.post);
-    case "updatePost":
-      return await updatePost(
-        event.arguments.author,
-        event.arguments.postId,
-        event.arguments.post
-      );
-    case "deletePost":
-      return await deletePost(event.arguments.author, event.arguments.postId);
-    default:
-      throw new Error(`Unknown field name: ${event.info.fieldName}`);
+// Define the shape of the Lambda response
+type ApiGatewayResponse = {
+  statusCode: number;
+  headers?: {
+    [name: string]: string;
+  };
+  body?: string;
+};
+
+// Define the Lambda function handler
+export const handler = async (
+  event: ApiGatewayEvent
+): Promise<ApiGatewayResponse> => {
+  switch (event.httpMethod) {
+    case 'POST':
+      if (event.path === '/createUser') {
+        // Call the createUser function if the request is to create a user
+        return await createUser(event.body);
+      } else if (event.path === '/createPost') {
+        // Call the createPost function if the request is to create a post
+        return await createPost(JSON.parse(event.body));
+      }
+      break;
+    case 'GET':
+      if (event.path === '/getPosts') {
+        // Call the getPosts function if the request is to get posts
+        const author = event.queryStringParameters.author;
+        return await getPosts(author);
+      }
+      break;
+    case 'PUT':
+      if (event.path.startsWith('/updatePost/')) {
+        // Call the updatePost function if the request is to update a post
+        const parts = event.path.split('/');
+        const author = parts[2];
+        const postId = parts[3];
+        return await updatePost(author, postId, JSON.parse(event.body));
+      }
+      break;
+      case 'DELETE':
+        if (event.path.startsWith('/deletePost/')) {
+          // Call the deletePost function if the request is to delete a post
+          const parts = event.path.split('/');
+          const author = parts[2];
+          const postId = parts[3];
+          const result = await deletePost(author, postId);
+          if (!result) {
+            return {
+              statusCode: 404,
+              body: JSON.stringify({ message: 'Post not found' }),
+            };
+          }
+          return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Post deleted successfully' }),
+          };
+        }
+        break;
+    }
+
+  // If the request doesn't match any of the supported operations, return an error
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ message: 'Invalid request' }),
   }
-};
+}

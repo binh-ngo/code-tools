@@ -3,7 +3,20 @@ var slugify = require("slugify");
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const createPost = async (postInput: PostInput) => {
+type ApiGatewayResponse = {
+  title: string;
+  titleSlug: string;
+  description: string;
+  code: string;
+  created: string;
+  updated: string;
+  viewCount: number;
+  postId: string;
+  author: string;
+  statusCode: number;
+};
+
+const createPost = async (postInput: PostInput):Promise<ApiGatewayResponse> => {
   console.log(
     `createPost invocation event: ${JSON.stringify(postInput, null, 2)}`
   );
@@ -19,10 +32,12 @@ const createPost = async (postInput: PostInput) => {
     postId,
     title: postInput.title,
     description: postInput.description,
+    code: postInput.code,
     author: postInput.author,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),
     viewCount: 0,
+    statusCode: 0,
   };
 
   const params = {
@@ -42,8 +57,18 @@ const createPost = async (postInput: PostInput) => {
   } catch (err) {
     console.log(`DynamoDB Error: ${JSON.stringify(err, null, 2)}`);
 
-    return null;
-  }
+    return {
+      title: "",
+      titleSlug: "",
+      description: "",
+      code: "",
+      created: "",
+      updated: "",
+      viewCount: 0,
+      postId: "",
+      author: "",
+      statusCode:0,
+    }
 };
-
+}
 export default createPost;

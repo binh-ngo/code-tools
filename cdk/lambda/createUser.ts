@@ -19,13 +19,13 @@ const createUser = async (event:any) => {
 
     case 'POST':
       // Parse the user data from the request body
-      const { userId, name, email } = JSON.parse(event.body);
+      const { userId, name, password } = JSON.parse(event.body);
 
       // Save the user data to the DynamoDB table
       await dynamodb
         .put({
           TableName: tableName,
-          Item: { userId, name, email },
+          Item: { userId, name, password },
         })
         .promise();
       return {
