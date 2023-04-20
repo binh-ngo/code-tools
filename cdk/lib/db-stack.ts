@@ -5,9 +5,14 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import { Construct } from 'constructs';
 import { CfnOutput } from 'aws-cdk-lib';
+import { IUserPool } from 'aws-cdk-lib/aws-cognito';
+import { StackProps } from 'aws-cdk-lib'
 
+interface DBStackProps extends StackProps {
+  readonly userPool: IUserPool;
+}
 export class DBStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: DBStackProps) {
     super(scope, id, props);
 
     const encryptionKey = new kms.Key(this, 'MyKey');
@@ -53,7 +58,7 @@ export class DBStack extends cdk.Stack {
 
           // Create the API Gateway REST API
     const api = new apigateway.RestApi(this, 'MyApiGateway', {
-        restApiName: "MyApi"
+        restApiName: "MyApi",
     });
     
     // Create the API Gateway resource and method for the create user endpoint
