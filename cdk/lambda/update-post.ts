@@ -16,7 +16,7 @@ const updatePost = async (
   const post: PostUpdateableFields = {
     titleSlug,
     title: postInput.title,
-    content: postInput.content,
+    description: postInput.description,
     updated: new Date().toISOString(),
   };
 
@@ -36,7 +36,7 @@ const updatePost = async (
     },
     ExpressionAttributeValues: {
       ":title": post.title,
-      ":content": post.content,
+      ":description": post.description,
       ":updated": post.updated,
       ":titleSlug": post.titleSlug,
     },

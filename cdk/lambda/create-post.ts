@@ -18,7 +18,7 @@ const createPost = async (postInput: PostInput) => {
     titleSlug,
     postId,
     title: postInput.title,
-    content: postInput.content,
+    description: postInput.description,
     author: postInput.author,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),

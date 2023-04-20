@@ -1,7 +1,7 @@
 type Post = {
     title: string;
     titleSlug: string;
-    content: string;
+    description: string;
     created: string;
     updated: string;
     viewCount: number;
@@ -11,14 +11,14 @@ type Post = {
   
   type PostInput = {
     title: string;
-    content: string;
+    description: string;
     author: string;
   };
   
   type PostUpdateableFields = {
     title?: string;
     titleSlug?: string;
-    content?: string;
+    description?: string;
     updated?: string;
     viewCount?: number;
     published?: boolean;
