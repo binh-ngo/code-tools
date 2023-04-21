@@ -26,15 +26,20 @@ export class DBStack extends cdk.Stack {
     })
 
     const postLambda = new lambda.Function(this, 'postLambda', {
-        runtime: lambda.Runtime.NODEJS_16_X,
-        handler: "lambdaRedirect.handler",
-        code: lambda.Code.fromAsset('lambda'),
-        environment: {
-          USER_TABLE_NAME: userTable.tableName,
-        },
-      });
-      userTable.grantFullAccess(postLambda);
-  
+      runtime: lambda.Runtime.NODEJS_16_X,
+      code: lambda.Code.fromAsset('lambda'),
+      handler: "lambdaRedirect.handler",
+      environment: {
+        USER_TABLE_NAME: userTable.tableName,
+      },
+    });
+    userTable.grantFullAccess(postLambda);
+
+    const helloWorldLambda = new lambda.Function(this, 'helloLambda', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      code: lambda.Code.fromAsset('lambdaHelloWorld'),
+      handler: "main.handler",
+    });
           // Create the API Gateway REST API
     const api = new apigateway.RestApi(this, 'MyApiGateway', {
         restApiName: "MyApi",
