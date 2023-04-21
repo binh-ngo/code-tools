@@ -1,5 +1,3 @@
-import { NumericConditions } from "aws-cdk-lib/aws-sns";
-
 type Post = {
     title: string;
     titleSlug: string;

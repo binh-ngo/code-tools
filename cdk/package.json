@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.198.1",
+    "@aws-cdk/aws-apigatewayv2": "^1.199.0",
     "aws-cdk-lib": "2.72.0",
     "cdk-spa-deploy": "^2.0.0-alpha.1",
     "constructs": "^10.0.0",
