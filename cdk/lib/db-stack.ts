@@ -27,7 +27,7 @@ export class DBStack extends cdk.Stack {
 
     const postLambda = new lambda.Function(this, 'postLambda', {
         runtime: lambda.Runtime.NODEJS_16_X,
-        handler: "main.handler",
+        handler: "lambdaRedirect.handler",
         code: lambda.Code.fromAsset('lambda'),
         environment: {
           USER_TABLE_NAME: userTable.tableName,
