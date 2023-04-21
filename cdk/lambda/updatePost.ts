@@ -21,7 +21,7 @@ const updatePost = async (
   };
 
   const params = {
-    TableName: process.env.POSTS_TABLE,
+    TableName: process.env.USER_TABLE_NAME,
     Key: {
       PK: `POST#${author}`,
       SK: postId,

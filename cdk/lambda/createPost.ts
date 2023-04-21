@@ -41,7 +41,7 @@ const createPost = async (postInput: PostInput):Promise<ApiGatewayResponse> => {
   };
 
   const params = {
-    TableName: process.env.POSTS_TABLE,
+    TableName: process.env.USER_TABLE_NAME,
     Item: {
       PK: `POST#${postInput.author}`,
       SK: postId,

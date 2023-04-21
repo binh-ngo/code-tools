@@ -28,7 +28,7 @@ type ApiGatewayResponse = {
 };
 
 // Define the Lambda function handler
-export const handler = async (
+exports.handler = async (
   event: ApiGatewayEvent
 ): Promise<ApiGatewayResponse> => {
   switch (event.httpMethod) {
