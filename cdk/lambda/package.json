@@ -2,7 +2,7 @@
     "name": "post-lambda",
     "version": "0.0.1",
     "description": "Interfaces with User DDB table",
-    "main": "main.ts",
+    "main": "lambdaRedirect.ts",
     "author": "Binh Ngo",
     "license": "MIT",
     "dependencies": {
