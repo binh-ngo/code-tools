@@ -7,7 +7,7 @@ const getPosts = async (author: string) => {
   console.log(`getPosts called with: ${author}`);
 
   const params: ddbQueryPostsParams = {
-    TableName: "userTable" || "",
+    TableName: process.env.USER_TABLE_NAME || "",
     KeyConditionExpression: "#PK = :post_partition",
     ExpressionAttributeNames: {
       "#PK": "PK",

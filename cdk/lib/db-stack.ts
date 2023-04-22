@@ -7,7 +7,7 @@ import { CfnOutput } from 'aws-cdk-lib';
 import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { StackProps } from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
-import { ManagedPolicy } from 'aws-cdk-lib/aws-iam';
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 interface DBStackProps extends StackProps {
   readonly userPool: IUserPool;
@@ -22,7 +22,8 @@ export class DBStack extends cdk.Stack {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
-
+    
+    // UserTableName's output is presented when deployed "CheatSheetDBStack26A56847.UserTableName "
     new CfnOutput(this, "UserTableName", {
       value: userTable.tableName,
     })
@@ -31,9 +32,7 @@ export class DBStack extends cdk.Stack {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
     });
     
-    lambdaRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess')
-    );
-
+    // creates a lambda 
     const postLambda = new lambda.Function(this, 'postLambda', {
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: "lambdaRedirect.handler",
@@ -43,8 +42,18 @@ export class DBStack extends cdk.Stack {
       },
       role: lambdaRole,
     });
-    userTable.grantFullAccess(postLambda);
+    userTable.grantFullAccess(lambdaRole);
 
+    // gives the lambda the permission to create Cloudwatch logs
+    lambdaRole.addToPolicy(new PolicyStatement({
+      effect: Effect.ALLOW,
+      resources: ['*'],
+      actions: [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+    }))
           // Create the API Gateway REST API
     const api = new apigateway.RestApi(this, 'MyApiGateway', {
         restApiName: "MyApi",
@@ -59,6 +68,7 @@ export class DBStack extends cdk.Stack {
     posts.addMethod('POST', new apigateway.LambdaIntegration(postLambda));
     posts.addMethod('GET', new apigateway.LambdaIntegration(postLambda));
     
+    // displays API Gateway endpoint url
     new cdk.CfnOutput(this, 'ApiGatewayUrl', {
         value: api.url,
     })
