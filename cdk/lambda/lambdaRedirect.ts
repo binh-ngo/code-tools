@@ -4,6 +4,7 @@ import deletePost from './deletePost';
 import getPosts from './getPosts';
 import updatePost from './updatePost';
 import createUser from './createUser';
+import { Handler } from 'aws-lambda';
 
 // Define the shape of the Lambda event
 type ApiGatewayEvent = {
@@ -28,9 +29,11 @@ type ApiGatewayResponse = {
 };
 
 // Define the Lambda function handler
-exports.handler = async (
+export const handler:Handler = async (
   event: ApiGatewayEvent
 ): Promise<ApiGatewayResponse> => {
+
+  console.log("event: " + JSON.stringify(event, null, 2));
   switch (event.httpMethod) {
     case 'POST':
       if (event.path === '/users') {

@@ -6,6 +6,8 @@ import { Construct } from 'constructs';
 import { CfnOutput } from 'aws-cdk-lib';
 import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { StackProps } from 'aws-cdk-lib'
+import * as iam from 'aws-cdk-lib/aws-iam'
+import { ManagedPolicy } from 'aws-cdk-lib/aws-iam';
 
 interface DBStackProps extends StackProps {
   readonly userPool: IUserPool;
@@ -25,21 +27,24 @@ export class DBStack extends cdk.Stack {
       value: userTable.tableName,
     })
 
+    const lambdaRole = new iam.Role(this, 'LambdaRole', {
+      assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    });
+    
+    lambdaRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess')
+    );
+
     const postLambda = new lambda.Function(this, 'postLambda', {
       runtime: lambda.Runtime.NODEJS_16_X,
-      code: lambda.Code.fromAsset('lambda'),
       handler: "lambdaRedirect.handler",
+      code: lambda.Code.fromAsset('lambda'),
       environment: {
         USER_TABLE_NAME: userTable.tableName,
       },
+      role: lambdaRole,
     });
     userTable.grantFullAccess(postLambda);
 
-    const helloWorldLambda = new lambda.Function(this, 'helloLambda', {
-      runtime: lambda.Runtime.NODEJS_16_X,
-      code: lambda.Code.fromAsset('lambdaHelloWorld'),
-      handler: "main.handler",
-    });
           // Create the API Gateway REST API
     const api = new apigateway.RestApi(this, 'MyApiGateway', {
         restApiName: "MyApi",

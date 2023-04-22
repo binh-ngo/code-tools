@@ -2,6 +2,9 @@
     "name": "post-lambda",
     "version": "0.0.1",
     "description": "Interfaces with User DDB table",
+    "scripts": {
+      "compile": "tsc"
+    },
     "main": "lambdaRedirect.ts",
     "author": "Binh Ngo",
     "license": "MIT",
