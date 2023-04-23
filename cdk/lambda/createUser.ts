@@ -3,7 +3,7 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const createUser = async (event:any) => {
   const tableName = process.env.USER_TABLE_NAME;
-
+  console.log(event)
   if (!tableName) {
     throw new Error('User table name is missing.');
   }
