@@ -28,7 +28,7 @@ const Login = () => {
       console.log(`Password: ${password}`);
     } catch (error) {
       console.log('Error signing up:', error);
-    }
+    } 
   }
 
   return (
