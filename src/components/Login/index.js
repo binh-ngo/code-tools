@@ -18,7 +18,6 @@ const Login = () => {
     }
   };
 
-
   async function signUp(username, password) {
     try {
       const signUpResponse = await Auth.signUp({
