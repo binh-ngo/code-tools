@@ -32,7 +32,6 @@ const Login = () => {
     }
   }
 
-  signUp("binhbinhbinh", "thisismypassword")
   return (
     <form onSubmit={handleLogin}>
       <label>

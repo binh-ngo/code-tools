@@ -49,7 +49,7 @@ export const handler:Handler = async (
         // Call the getPosts function if the request is to get posts
         const author = event.queryStringParameters.author;
         return await getPosts(author);
-      }
+      } 
       break;
     case 'PUT':
       if (event.path.startsWith('/posts/')) {
