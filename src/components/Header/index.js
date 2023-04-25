@@ -1,25 +1,17 @@
 import React from 'react';
 import Login from '../Login';
-import { Auth } from 'aws-amplify';
 import "./style.css";
+import { Auth } from "aws-amplify"
 
 function Header() {
-  function login(){
-    if(Auth) {
-      return <button onClick={handleLogout}></button>
-    } else {
-      <div className='loginForm'>
-      <Login />
-      </div>
-    }
-  }
-  function handleLogout() {
-    try {
-      Auth.signOut();
-      // Redirect to the login page or a logged-out landing page
-    } catch (error) {
-      console.log('Error signing out:', error);
-  }
+function handleLogout() {
+  Auth.signOut()
+  .then(() => {
+    console.log('User signed out');
+  })
+  .catch(error => {
+    console.log('Error signing out', error);
+  });
 }
   return (
     <div className="header">
@@ -27,7 +19,14 @@ function Header() {
           <a href='/' className="navbar-brand col-sm-5">
             Coding Cheatsheet
           </a>
-
+          { Auth.signIn ? (
+            <a href="/" onClick={handleLogout}>Log Out</a>
+          ) : (
+            <div className='loginForm'>
+            <Login />
+            </div>
+          )                    
+          }
         </nav>
     </div>
   );
