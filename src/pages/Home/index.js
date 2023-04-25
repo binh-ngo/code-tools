@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
-import './style.css'
 import { Editor } from "../../components/Lexical/Editor";
+import './style.css'
 
 function Home() {
   const homeContent = [
@@ -34,8 +34,8 @@ function Home() {
             />
         </Col>
         ))}
-        <Editor />
             </Row>
+            <Editor />
             </Container>
   );
 }

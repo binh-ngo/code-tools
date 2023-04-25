@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import HomeCard from '../../components/HomeCard';
 import "./style.css"
 import { atomOneDark, CodeBlock } from "react-code-blocks";
+import {Editor} from "../../components/Lexical/Editor.js"
 
 
 function Algorithms() {
@@ -66,6 +67,7 @@ var longestOnes = function(nums, k) {
         </Col>
       ))}
     </Row>
+      <Editor />
   </Container>
   )
 }

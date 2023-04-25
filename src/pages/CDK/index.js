@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import "./style.css"
 import { atomOneDark, CopyBlock } from "react-code-blocks";
+import { Editor } from "../../components/Lexical/Editor";
 
 function CDK() {
     const reactContent = [
@@ -100,6 +101,7 @@ export class CdkStack extends cdk.Stack {
           </Col>
         ))}
       </Row>
+      <Editor />
     </Container>
   )
 }
