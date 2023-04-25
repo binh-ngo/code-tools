@@ -88,7 +88,7 @@ class Hello extends Component {
   ];
   return (
     <Container>
-      <h1 className="cheatsheetTitle">React Cheatsheet</h1>
+      <h1 className="cheatsheetTitle">React</h1>
       <Row className="Home flex">
         {reactContent.map((props) => (
           <Col sm="3" className="homeCard flex">

@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import { Editor } from "../../components/Lexical/Editor";
@@ -23,6 +23,9 @@ function Home() {
       description: "Click me if you want to learn some LeetCode tips!"
     },
   ]
+
+  const [editor, setEditor] = useState("hidden")
+  
   return (
     <Container>
       <Row className="Home flex">
@@ -35,7 +38,7 @@ function Home() {
         </Col>
         ))}
             </Row>
-            <Editor />
+            <Editor className={editor}/>
             </Container>
   );
 }

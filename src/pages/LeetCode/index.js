@@ -147,7 +147,7 @@ code:
     ];
     return(
         <Container>
-        <h1 className="cheatsheetTitle">LeetCode Cheatsheet</h1>
+        <h1 className="cheatsheetTitle">LeetCode</h1>
         <Row className="Home flex">
           {leetcodeContent.map((props) => (
             <Col sm="3" className="homeCard flex">

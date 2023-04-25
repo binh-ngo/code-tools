@@ -13,6 +13,7 @@ import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import editorConfig from "./editorConfig";
+// import AWS from 'aws-sdk'
 import "./style.css"
 
 export const Editor = ({readOnly, onChange, children}) => {
@@ -52,6 +53,38 @@ export const Editor = ({readOnly, onChange, children}) => {
           </div>
         </div>
       </LexicalComposer>
+      <button>Create Post</button>
+      {/* <script src="https://sdk.amazonaws.com/js/aws-sdk-2.889.0.min.js"></script>
+<script>
+{function createPost() {
+  // Replace 'YOUR_API_GATEWAY_ENDPOINT' with the actual URL of your API Gateway endpoint.
+  var endpoint = 'YOUR_API_GATEWAY_ENDPOINT';
+  var lambda = new AWS.Lambda();
+
+  var params = {
+    FunctionName: 'createPost',
+    InvocationType: 'RequestResponse',
+    Payload: JSON.stringify({
+      // Replace with your post data
+      title: 'My First Post',
+      content: 'This is the content of my first post.',
+      author: 'John Doe'
+    })
+  };
+
+  // Make a POST request to the API Gateway endpoint
+  fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}}
+</script> */}
     </>
   );
 };

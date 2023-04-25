@@ -51,7 +51,7 @@ var longestOnes = function(nums, k) {
     ];
   return (
     <Container>
-    <h1 className="cheatsheetTitle">LeetCode Cheatsheet</h1>
+    <h1 className="cheatsheetTitle">Algorithms</h1>
     <Row className="Home flex">
       {algorithmContent.map((props) => (
         <Col sm="3" className="homeCard flex">

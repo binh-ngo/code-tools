@@ -1,6 +1,7 @@
 .cheatsheetTitle {
-    margin-left: 5%;
-    margin-top: 2%;
+    margin-left: 8%;
+    margin-top: 1%;
+    color: rgb(120, 114, 114);
 }
 
 @media screen and (max-width: 1500px) {
