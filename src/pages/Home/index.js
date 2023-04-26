@@ -1,4 +1,5 @@
-import {React, useState} from "react";
+import {React, useEffect, useContext} from "react";
+import { AccountContext } from "../../components/User/Accounts.tsx";
 import { Row, Col, Container } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
 import { Editor } from "../../components/Lexical/Editor";
@@ -24,8 +25,17 @@ function Home() {
     },
   ]
 
-  const [editor, setEditor] = useState("hidden")
-  
+  const {loggedInUser, resetCurrentAuthedUser} = useContext(AccountContext);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      await resetCurrentAuthedUser();
+    };
+    if (!loggedInUser) {
+      checkAuth();
+    }
+  }, [loggedInUser, resetCurrentAuthedUser]);
+
   return (
     <Container>
       <Row className="Home flex">
@@ -38,7 +48,11 @@ function Home() {
         </Col>
         ))}
             </Row>
-            <Editor className={editor}/>
+            {loggedInUser && 
+              <div>
+                <Editor />
+              </div>
+            }
             </Container>
   );
 }

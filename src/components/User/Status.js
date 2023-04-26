@@ -1,8 +1,8 @@
 import React from "react";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AccountContext } from "./Accounts";
-import "./User.css";
+import { AccountContext } from "./Accounts.tsx";
+import "./User.css"
 
 const Status = () => {
   const { loggedInUser, resetCurrentAuthedUser, signOut } =
@@ -21,17 +21,9 @@ const Status = () => {
   return (
     <div className="status-container">
       {loggedInUser && (
-        <div className="login-status">
-          <button
-            className="admin-page-link"
-            onClick={() => navigate("/admin")}
-          >
-            Admin
-          </button>
           <div>
             <button onClick={() => signOut(() => navigate("/"))}>Logout</button>
           </div>
-        </div>
       )}
     </div>
   );

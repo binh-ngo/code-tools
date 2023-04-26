@@ -8,11 +8,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home/index";
-import Algorithms from "./pages/Algorithms/index"
+import Algorithms from "./pages/Algorithms/index";
 import ReactPage from "./pages/ReactPage";
-import CDK from "./pages/CDK/index"
+import CDK from "./pages/CDK/index";
 import LeetCode from "./pages/LeetCode";
 import Header from "./components/Header";
+import { Account } from "./components/User/Accounts.tsx";
 import { awsconfig } from "./aws-exports.ts";
 import { Amplify } from "aws-amplify";
 
@@ -22,16 +23,18 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/react" element={<ReactPage />} /> 
-          <Route path="/algorithms" element={<Algorithms />} />
-          <Route path="/cdk" element={<CDK />} />
-          <Route path="/leetcode" element={<LeetCode />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <Account>
+          <Header />
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/react" element={<ReactPage />} />
+            <Route path="/algorithms" element={<Algorithms />} />
+            <Route path="/cdk" element={<CDK />} />
+            <Route path="/leetcode" element={<LeetCode />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Account>
       </div>
     </Router>
   );

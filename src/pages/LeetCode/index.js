@@ -1,24 +1,25 @@
-import { React } from "react";
+import {React, useEffect, useContext} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import HomeCard from "../../components/HomeCard";
-import "./style.css"
+import "./style.css";
 import { atomOneDark, CopyBlock } from "react-code-blocks";
 import { Editor } from "../../components/Lexical/Editor";
+import { AccountContext } from "../../components/User/Accounts.tsx";
 
 function LeetCode() {
-    // TODO: show code on click
-    // const [showCode, setShowCode] = useState(false);
+  // TODO: show code on click
+  // const [showCode, setShowCode] = useState(false);
 
-    // function toggleCode() {
-    //     setShowCode(!showCode);
-    // }
+  // function toggleCode() {
+  //     setShowCode(!showCode);
+  // }
 
-    const leetcodeContent = [
-        {
-            title: "1. Two Sum",
-            description: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
-            code: 
-`var twoSum = function(nums, target) {
+  const leetcodeContent = [
+    {
+      title: "1. Two Sum",
+      description:
+        "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+      code: `var twoSum = function(nums, target) {
 // establish an array to store the nums that equal target
 const solution = [];
 // the first for loop cycles through each number in the nums array
@@ -35,12 +36,12 @@ for(var i = 0; i < nums.length; i++) {
     return solution;
     // time complexity O(n^2)
 };`,
-        },
-        {
-            title: "9. Palindrome Number",
-            description: "Given an integer x, return true if x is a palindrome, and false otherwise. Try to complete this challenge without turning the number into a string.",
-            code: 
-`var isPalindrome = function(x) {
+    },
+    {
+      title: "9. Palindrome Number",
+      description:
+        "Given an integer x, return true if x is a palindrome, and false otherwise. Try to complete this challenge without turning the number into a string.",
+      code: `var isPalindrome = function(x) {
   // negative numbers can never be a palindrome
   if(x<0) return false;
   // set up the variable for the reversed number
@@ -60,12 +61,11 @@ for(var i = 0; i < nums.length; i++) {
       return reverse === x;
       // time complexity O(n)
 };`,
-        },
-        {
-title: "13. Roman to Integer",
-description: `Given roman numerals "III", "LVIII", and "LVIII", convert it to an integer.`,
-code: 
-`var romanToInt = function(s) {
+    },
+    {
+      title: "13. Roman to Integer",
+      description: `Given roman numerals "III", "LVIII", and "LVIII", convert it to an integer.`,
+      code: `var romanToInt = function(s) {
   const roman = {
       'I': 1,
       'V': 5,
@@ -92,12 +92,11 @@ code:
       return result;
       // time complexity O(n)
 };`,
-        },
-        {
-title: "14. Longest Common Prefix",
-description: `Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string "".`,
-code: 
-`//  we are searching for the longest common prefix
+    },
+    {
+      title: "14. Longest Common Prefix",
+      description: `Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string "".`,
+      code: `//  we are searching for the longest common prefix
 // not a substring. This means the prefix has to be in the beginning of the word.
 
 var longestCommonPrefix = function(strs) {
@@ -113,16 +112,15 @@ var longestCommonPrefix = function(strs) {
     return strs[0];
     // time complexity O(n*m)
 };`,
-        },
-        {
-title: "20. Valid Parentheses",
-description: `Given a string s containing just the characters (  ,  )  ,  {  ,  }  ,  [  , and  ]  , determine if the input string is valid.
+    },
+    {
+      title: "20. Valid Parentheses",
+      description: `Given a string s containing just the characters (  ,  )  ,  {  ,  }  ,  [  , and  ]  , determine if the input string is valid.
 An input string is valid if:
 Open brackets must be closed by the same type of brackets.
 Open brackets must be closed in the correct order.
 Every close bracket has a corresponding open bracket of the same type.`,
-code: 
-`var isValid = function(s) {
+      code: `var isValid = function(s) {
     const bracketPair = {
         "(": ")",
         "{": "}",
@@ -143,32 +141,44 @@ code:
     }
     return openingBrackets.length === 0;
 };`,
-        },
-    ];
-    return(
-        <Container>
-        <h1 className="cheatsheetTitle">LeetCode</h1>
-        <Row className="Home flex">
-          {leetcodeContent.map((props) => (
-            <Col sm="3" className="homeCard flex">
-                {/* <Button onClick={toggleCode}> */}
-              <HomeCard 
-                title={props.title} 
-                description={props.description} 
-                />
-                {/* </Button> */}
-          <CopyBlock 
-          className="cLyCWT"
-          text={props.code}
-          language='javascript'
-          showLineNumbers={false}
-          theme={atomOneDark}/>
-            </Col>
-          ))}
-        </Row>
-        <Editor />
-      </Container>
-    )
+    },
+  ];
+  const {loggedInUser, resetCurrentAuthedUser} = useContext(AccountContext);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      await resetCurrentAuthedUser();
+    };
+    if (!loggedInUser) {
+      checkAuth();
+    }
+  }, [loggedInUser, resetCurrentAuthedUser]);
+  return (
+    <Container>
+      <h1 className="cheatsheetTitle">LeetCode</h1>
+      <Row className="Home flex">
+        {leetcodeContent.map((props) => (
+          <Col sm="3" className="homeCard flex">
+            {/* <Button onClick={toggleCode}> */}
+            <HomeCard title={props.title} description={props.description} />
+            {/* </Button> */}
+            <CopyBlock
+              className="cLyCWT"
+              text={props.code}
+              language="javascript"
+              showLineNumbers={false}
+              theme={atomOneDark}
+            />
+          </Col>
+        ))}
+      </Row>
+      {loggedInUser && (
+        <div>
+          <Editor />
+        </div>
+      )}{" "}
+    </Container>
+  );
 }
 
 export default LeetCode;

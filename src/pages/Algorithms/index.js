@@ -1,18 +1,17 @@
-import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import HomeCard from '../../components/HomeCard';
-import "./style.css"
+import {React, useEffect, useContext} from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import HomeCard from "../../components/HomeCard";
+import "./style.css";
 import { atomOneDark, CodeBlock } from "react-code-blocks";
-import {Editor} from "../../components/Lexical/Editor.js"
-
+import { Editor } from "../../components/Lexical/Editor.js";
+import { AccountContext } from "../../components/User/Accounts.tsx";
 
 function Algorithms() {
-    const algorithmContent = [
-      {
-        title: "A. Sliding Window Algorithm",
-        description: `Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.`,
-        code:
-`Example 1:
+  const algorithmContent = [
+    {
+      title: "A. Sliding Window Algorithm",
+      description: `Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.`,
+      code: `Example 1:
 
 Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
 Output: 6
@@ -47,29 +46,42 @@ var longestOnes = function(nums, k) {
     return right-left;
 };
 `,
-                },
-    ];
+    },
+  ];
+  const {loggedInUser, resetCurrentAuthedUser} = useContext(AccountContext);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      await resetCurrentAuthedUser();
+    };
+    if (!loggedInUser) {
+      checkAuth();
+    }
+  }, [loggedInUser, resetCurrentAuthedUser]);
+
   return (
     <Container>
-    <h1 className="cheatsheetTitle">Algorithms</h1>
-    <Row className="Home flex">
-      {algorithmContent.map((props) => (
-        <Col sm="3" className="homeCard flex">
-          <HomeCard 
-            title={props.title} 
-            description={props.description} 
+      <h1 className="cheatsheetTitle">Algorithms</h1>
+      <Row className="Home flex">
+        {algorithmContent.map((props) => (
+          <Col sm="3" className="homeCard flex">
+            <HomeCard title={props.title} description={props.description} />
+            <CodeBlock
+              text={props.code}
+              language="javascript"
+              showLineNumbers={false}
+              theme={atomOneDark}
             />
-      <CodeBlock 
-      text={props.code}
-      language='javascript'
-      showLineNumbers={false}
-      theme={atomOneDark}/>
-        </Col>
-      ))}
-    </Row>
-      <Editor />
-  </Container>
-  )
+          </Col>
+        ))}
+      </Row>
+      {loggedInUser && (
+        <div>
+          <Editor />
+        </div>
+      )}{" "}
+    </Container>
+  );
 }
 
 export default Algorithms;

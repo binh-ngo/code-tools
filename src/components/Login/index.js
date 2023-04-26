@@ -1,62 +1,50 @@
-import React, { useState } from 'react';
-import { Auth } from 'aws-amplify';
+import React, { useContext, useState } from 'react';
+// import { Auth } from 'aws-amplify';
 import './style.css';
+import { AccountContext } from '../User/Accounts.tsx';
+import { useNavigate } from 'react-router-dom';
 
 
-const Login = () => {
+const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [button, setButton] = useState("hidden")
-  const [form, setForm] = useState("visible")
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('')
   
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await Auth.signIn(username, password);
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
-    if(Auth.signIn(process.env.COGNITO_USERNAME, process.env.COGNITO_PASSWORD)) {
-      setUsername("");
-      setPassword("");
-      setSuccessMessage("Logged in successfully.")
-      setButton("visible");
-      setForm("hidden")
-    }
-  };
+  const { loggedInUser, signIn } = useContext(AccountContext);
 
-  function handleLogout() {
-    Auth.signOut()
-    .then(() => {
-      console.log('User signed out');
-    })
-    .catch(error => {
-      console.log('Error signing out', error);
-    });
-    // if(Auth.signOut(username, password)) {
-      setButton("hidden");
-      setForm("visible")
-    }
-  
+  let navigate = useNavigate();
+  let from = props.from || "/";
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    signIn(username, password)
+      .then((data) => {
+        console.log("Logged in.", data);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.error("Error logging in.", err);
+      });
+  };
 
   return (
     <div className='signin'>
-    <form id="login-form" className={form} onSubmit={handleLogin}>
+    {!loggedInUser && (
+    <form id="login-form" onSubmit={onSubmit}>
       <label>
-        Username: 
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        Username:
+        <input className="textField" type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
       </label>
       <label>
         Password:
-        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input className="textField" type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <button className="loginBtn"type="submit">Login</button>
       {errorMessage && <p style={{marginTop: ".5%"}}>{errorMessage}</p>}
     </form>
-    { successMessage && <button id="logoutBtn" className={button} onClick={handleLogout}>Logout</button>}
-    {successMessage &&  <p className={button} style={{marginLeft: "10%"}}>{successMessage}</p>}
+    )}
     </div>
   );
   }

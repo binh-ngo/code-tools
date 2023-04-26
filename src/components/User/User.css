@@ -1,0 +1,10 @@
+.status-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.status-container button {
+    width: 5rem;
+    height: 3rem;
+    font-family: "Raleway";
+}
