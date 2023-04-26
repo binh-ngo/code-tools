@@ -6,9 +6,10 @@ import './style.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [button, setButton] = useState("hidden")
-  // const [form, setForm] = useState("visible")
+  const [button, setButton] = useState("hidden")
+  const [form, setForm] = useState("visible")
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('')
   
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,11 +18,12 @@ const Login = () => {
     } catch (error) {
       setErrorMessage(error.message);
     }
-    if(Auth.signIn(username, password)) {
+    if(Auth.signIn(process.env.COGNITO_USERNAME, process.env.COGNITO_PASSWORD)) {
       setUsername("");
       setPassword("");
-      // setButton("visible");
-      // setForm("hidden")
+      setSuccessMessage("Logged in successfully.")
+      setButton("visible");
+      setForm("hidden")
     }
   };
 
@@ -34,14 +36,14 @@ const Login = () => {
       console.log('Error signing out', error);
     });
     // if(Auth.signOut(username, password)) {
-    //   setButton("hidden");
-    //   setForm("visible")
+      setButton("hidden");
+      setForm("visible")
     }
   
 
   return (
     <div className='signin'>
-    <form id="login-form" onSubmit={handleLogin}>
+    <form id="login-form" className={form} onSubmit={handleLogin}>
       <label>
         Username: 
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -51,9 +53,10 @@ const Login = () => {
         <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <button className="loginBtn"type="submit">Login</button>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <p style={{marginTop: ".5%"}}>{errorMessage}</p>}
     </form>
-    <button id="logoutBtn" onClick={handleLogout}>Logout</button>
+    { successMessage && <button id="logoutBtn" className={button} onClick={handleLogout}>Logout</button>}
+    {successMessage &&  <p className={button} style={{marginLeft: "10%"}}>{successMessage}</p>}
     </div>
   );
   }
