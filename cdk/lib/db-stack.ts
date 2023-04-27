@@ -67,6 +67,8 @@ export class DBStack extends cdk.Stack {
     const posts = api.root.addResource('posts');
     posts.addMethod('POST', new apigateway.LambdaIntegration(postLambda));
     posts.addMethod('GET', new apigateway.LambdaIntegration(postLambda));
+    posts.addMethod('PUT', new apigateway.LambdaIntegration(postLambda));
+    posts.addMethod('DELETE', new apigateway.LambdaIntegration(postLambda));
     
     // displays API Gateway endpoint url
     new cdk.CfnOutput(this, 'ApiGatewayUrl', {
