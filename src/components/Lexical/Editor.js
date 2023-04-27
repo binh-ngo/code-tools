@@ -15,6 +15,7 @@ import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import editorConfig from "./editorConfig";
 // import AWS from 'aws-sdk'
 import "./style.css"
+import { API } from "aws-amplify";
 
 export const Editor = ({readOnly, onChange, children}) => {
   const config = {
@@ -26,6 +27,18 @@ export const Editor = ({readOnly, onChange, children}) => {
         editor.setEditorState(editorState);
     }
   }
+  }
+
+  async function createPost(){
+    const editorInput = document.querySelector("editor-input");
+    const myApi = "MyApi";
+    const path = '/posts';
+    const myPost = {
+      body: editorInput, 
+      headers: {} // OPTIONAL
+    };
+  
+    return await API.post(myApi, path, myPost);
   }
   return (
 <>
@@ -53,7 +66,7 @@ export const Editor = ({readOnly, onChange, children}) => {
           </div>
         </div>
       </LexicalComposer>
-      <button>Create Post</button>
+      <button onClick={createPost}>Create Post</button>
       {/* <script src="https://sdk.amazonaws.com/js/aws-sdk-2.889.0.min.js"></script>
 <script>
 {function createPost() {
