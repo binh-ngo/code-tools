@@ -37,7 +37,7 @@ export const Editor = ({readOnly, onChange, children}) => {
       body: editorInput, 
       headers: {} // OPTIONAL
     };
-  
+    console.log(editorInput)
     return await API.post(myApi, path, myPost);
   }
   return (

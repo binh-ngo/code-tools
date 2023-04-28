@@ -15,9 +15,10 @@ import LeetCode from "./pages/LeetCode";
 import Header from "./components/Header";
 import { Account } from "./components/User/Accounts.tsx";
 import { awsconfig } from "./aws-exports.ts";
-import { Amplify } from "aws-amplify";
+import { Amplify, API } from "aws-amplify";
 
 Amplify.configure(awsconfig);
+API.configure(awsconfig);
 
 function App() {
   return (

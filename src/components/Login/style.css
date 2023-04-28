@@ -32,3 +32,41 @@ form input {
 .textField {
     margin-left: .5rem;
 }
+
+@media screen and (max-width: 1101px) {
+    #login-form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+    .textField {
+        margin-top: .5rem;
+    }
+}
+
+@media screen and (max-width: 771px) {
+    .navbar-brand {
+        margin-left: 10%;
+        margin-top: 1%;
+    }
+    #login-form {
+        flex-direction: row;
+        margin-top: -2%;
+    }
+    .textField {
+        margin-left:0;
+    }
+    form input {
+        margin-right: 0;
+    }
+    .loginBtn {
+        margin-top: 4%;
+    }
+    }
+
+@media screen and (max-width: 667px) {
+    #login-form {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+}

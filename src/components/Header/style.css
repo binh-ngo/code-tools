@@ -58,3 +58,30 @@ nav {
     align-items: center;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 1101px) {
+.navbar-brand {
+    margin-left: 8%;
+    margin-top: -2%;
+  }
+}
+
+@media screen and (max-width: 771px) {
+    .navbar-brand {
+        margin-left: 10%;
+        margin-top: 1%;
+        font-size: 40px !important;
+      }
+    }
+
+@media screen and (max-width: 667px) {
+    .navbar-brand {
+        margin-top: -5%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .navbar-brand {
+        margin-left: 15%;
+    }
+}

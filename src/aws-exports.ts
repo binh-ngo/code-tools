@@ -8,8 +8,8 @@ export const awsconfig = {
     API: {
       endpoints: 
         {
-          name: "MyAPI",
-          endpoint: process.env.API_URL,
+          name: "MyApi",
+          endpoint: "https://s2osri81o6.execute-api.us-east-1.amazonaws.com/prod/"
         },
-      }
+    }
   };
