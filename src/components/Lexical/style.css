@@ -718,3 +718,13 @@ pre::-webkit-scrollbar-thumb {
   margin-right: 3.8%;
   font-family: "Raleway";
 }
+
+#title {
+  margin-left: 4.5%;
+  height: 30px;
+  width: 200px;
+}
+
+.titleHeader {
+  margin-left: 4.5%;
+}

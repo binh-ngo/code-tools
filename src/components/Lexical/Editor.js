@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -18,7 +18,21 @@ import "./style.css";
 import { API } from "aws-amplify";
 
 export const Editor = ({ readOnly, onChange, children }) => {
-  const config = {
+  
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    if (title) {
+      setTitle(title);
+          // if (props.children) {
+          //   setChildren(props.children);
+          // }
+          // if (props.postId) {
+          //   setPostId(props.postId);
+          // }
+    }
+  }, [title]);
+    
+    const config = {
     ...editorConfig,
     readOnly,
     editorState: (editor) => {
@@ -34,19 +48,17 @@ export const Editor = ({ readOnly, onChange, children }) => {
   async function createPost() {
     const editorInput = document.querySelector(".editor-input");
     const data = {
-      title: "Hi",
-      body: editorInput,
-      headers: {
-      }, // OPTIONAL
+      title: title,
+      body: editorInput.textContent,
+      headers: "Access-Control-Allow-Origin: *", // OPTIONAL
     };
     console.log(editorInput);
     return await API.post('MyApi', 'posts', data);
   }
 
-  const [title, setTitle] = useState("");
-
   return (
     <>
+        <h3 className="titleHeader">Post Title</h3>
             <input
           type="text"
           id="title"
