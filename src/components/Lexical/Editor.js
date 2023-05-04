@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -7,41 +7,54 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import ToolbarPlugin from "./plugins/ToolbarPlugin"
+import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import editorConfig from "./editorConfig";
 // import AWS from 'aws-sdk'
-import "./style.css"
+import "./style.css";
 import { API } from "aws-amplify";
 
-export const Editor = ({readOnly, onChange, children}) => {
+export const Editor = ({ readOnly, onChange, children }) => {
   const config = {
     ...editorConfig,
     readOnly,
     editorState: (editor) => {
+      // if anything is typed in the editor,
       if (children) {
+        // turn input into a string and set that to the editor state
         const editorState = editor.parseEditorState(JSON.stringify(children));
         editor.setEditorState(editorState);
-    }
-  }
+      }
+    },
+  };
+
+  async function createPost() {
+    const editorInput = document.querySelector(".editor-input");
+    const data = {
+      title: "Hi",
+      body: editorInput,
+      headers: {
+      }, // OPTIONAL
+    };
+    console.log(editorInput);
+    return await API.post('MyApi', 'posts', data);
   }
 
-  async function createPost(){
-    const editorInput = document.querySelector("editor-input");
-    const myApi = "MyApi";
-    const path = '/posts';
-    const myPost = {
-      body: editorInput, 
-      headers: {} // OPTIONAL
-    };
-    console.log(editorInput)
-    return await API.post(myApi, path, myPost);
-  }
+  const [title, setTitle] = useState("");
+
   return (
-<>
+    <>
+            <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+        ></input>
       <LexicalComposer initialConfig={config} children={children}>
         <div className="editor-container">
           {!readOnly && <ToolbarPlugin />}
@@ -66,7 +79,9 @@ export const Editor = ({readOnly, onChange, children}) => {
           </div>
         </div>
       </LexicalComposer>
-      <button onClick={createPost}>Create Post</button>
+      <div className="createBtn">
+        <button onClick={createPost}>Create Post</button>
+      </div>
       {/* <script src="https://sdk.amazonaws.com/js/aws-sdk-2.889.0.min.js"></script>
 <script>
 {function createPost() {

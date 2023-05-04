@@ -705,3 +705,16 @@ pre::-webkit-scrollbar {
 pre::-webkit-scrollbar-thumb {
   background: #999;
 }
+
+.createBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.createBtn button {
+  width: 7rem;
+  height: 2.5rem;
+  margin-top: -.8%;
+  margin-right: 3.8%;
+  font-family: "Raleway";
+}

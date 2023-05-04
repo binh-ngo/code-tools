@@ -3,13 +3,13 @@ import React, { useContext, useState } from 'react';
 import './style.css';
 import { AccountContext } from '../User/Accounts.tsx';
 import { useNavigate } from 'react-router-dom';
-
+// TODO: add a message whether or not a user logged in or entered an incorrect UN or PW
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('')
+  // const [successMessage, setSuccessMessage] = useState('')
   
   const { loggedInUser, signIn } = useContext(AccountContext);
 
@@ -28,7 +28,6 @@ const Login = (props) => {
         console.error("Error logging in.", err);
       });
   };
-
   return (
     <div className='signin'>
     {!loggedInUser && (
@@ -43,6 +42,7 @@ const Login = (props) => {
       </label>
       <button className="loginBtn"type="submit">Login</button>
       {errorMessage && <p style={{marginTop: ".5%"}}>{errorMessage}</p>}
+      {/* {successMessage && <p style={{marginTop: ".5%"}}>{successMessage}</p>} */}
     </form>
     )}
     </div>

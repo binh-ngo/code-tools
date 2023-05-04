@@ -6,10 +6,11 @@ export const awsconfig = {
       authenticationFlowType: "USER_PASSWORD_AUTH",
     },
     API: {
-      endpoints: 
+      endpoints: [
         {
           name: "MyApi",
           endpoint: "https://s2osri81o6.execute-api.us-east-1.amazonaws.com/prod/"
         },
+      ]
     }
   };
